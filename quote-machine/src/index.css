@@ -1,0 +1,12 @@
+body {
+	margin: 0;
+	line-height: 1.4;
+	box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+	font-size: 2em;
+	line-height: 1.2;
+}
