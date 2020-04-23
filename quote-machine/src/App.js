@@ -1,42 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
+
 import logo from './loading.svg';
 import twitter from './twitter.svg';
+
+const colors = [
+  '#364f6b',
+  '#3fc1c9',
+  '#fc5185',
+  '#00b8a9',
+  '#48466d',
+  '#3d84a8',
+  '#46cdcf',
+  '#f08a5d',
+  '#b83b5e',
+  '#6a2c70',
+  '#f38181',
+  '#95e1d3',
+  '#48466d',
+  '#3d84a8',
+  '#46cdcf',
+  '#abedd8',
+  '#f67280',
+  '#c06c84',
+  '#6c5b7b',
+  '#355c7d',
+];
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [quote, setQuote] = useState({});
+  const [color, setColor] = useState(0);
 
   // Fetching data from API
   useEffect(() => {
     const fetchData = async () => {
-      console.log('fetching data');
       setLoading(true);
       const result = await fetch(
         'https://type.fit/api/quotes'
       ).then((response) => response.json());
       setData(result);
       setLoading(false);
-      console.log('fetched data');
     };
     fetchData();
   }, []);
 
+  // Getting the first random quote
   useEffect(() => {
     setQuote(data[Math.floor(Math.random() * 1600)]);
   }, [data]);
 
-  // Getting random quote
-  const randomQuotes = () =>
-    data.length === 0
-      ? setLoading(true)
-      : setQuote(data[Math.floor(Math.random() * 1600)]);
+  // changing color based on click
+  useEffect(() => {
+    const element = document.getElementById('wrapper');
+    element.style.color = colors[color];
+    element.style.background = colors[color];
+  }, [color]);
+
+  // Getting random quote on button click
+  const randomQuotes = () => {
+    if (data.length === 0) {
+      setLoading(true);
+    } else {
+      setColor(Math.floor(Math.random() * colors.length));
+      setQuote(data[Math.floor(Math.random() * 1600)]);
+    }
+  };
 
   return (
-    <Wrapper>
+    <Wrapper id="wrapper">
       <QuoteBox id="quote-box">
-        {loading ? (
+        {loading || quote === undefined ? (
           <img src={logo} alt="Loading" />
         ) : (
           <>
@@ -71,12 +106,13 @@ const Wrapper = styled.div`
   display: flex;
   height: 100vh;
   align-items: center;
-  background: #ff1e76;
+  background: #fc5185;
   justify-content: center;
+  color: #fc5185;
 `;
 
 const QuoteBox = styled.div`
-  color: #ff1e76;
+  color: inherit;
   border-radius: 7px;
   background: #fbfbfb;
   padding: 6em 1em;
@@ -84,6 +120,9 @@ const QuoteBox = styled.div`
   flex-basis: 85%;
   display: flex;
   flex-wrap: wrap;
+  img {
+    margin: auto;
+  }
 `;
 
 const QuoteText = styled.div`
@@ -119,6 +158,7 @@ const QuoteUtil = styled.div`
     font-size: 17px;
     outline: none;
     margin: 0 0.5em;
+    color: inherit;
   }
 `;
 
