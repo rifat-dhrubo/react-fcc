@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
-
 import logo from './loading.svg';
 import twitter from './twitter.svg';
 
@@ -25,6 +24,15 @@ const colors = [
   '#c06c84',
   '#6c5b7b',
   '#355c7d',
+  '#16a085',
+  '#27ae60',
+  '#2c3e50',
+  '#f39c12',
+  '#e74c3c',
+  '#9b59b6',
+  '#FB6964',
+  '#77B1A9',
+  '#73A857',
 ];
 
 function App() {
@@ -32,6 +40,7 @@ function App() {
   const [data, setData] = useState([]);
   const [quote, setQuote] = useState({});
   const [color, setColor] = useState(0);
+  const wrapper = useRef(null);
 
   // Fetching data from API
   useEffect(() => {
@@ -51,11 +60,10 @@ function App() {
     setQuote(data[Math.floor(Math.random() * 1600)]);
   }, [data]);
 
-  // changing color based on click
+  // Changing color based on click
   useEffect(() => {
-    const element = document.getElementById('wrapper');
-    element.style.color = colors[color];
-    element.style.background = colors[color];
+    wrapper.current.style.color = colors[color];
+    wrapper.current.style.background = colors[color];
   }, [color]);
 
   // Getting random quote on button click
@@ -69,7 +77,7 @@ function App() {
   };
 
   return (
-    <Wrapper id="wrapper">
+    <Wrapper ref={wrapper}>
       <QuoteBox id="quote-box">
         {loading || quote === undefined ? (
           <img src={logo} alt="Loading" />
@@ -105,10 +113,11 @@ function App() {
 const Wrapper = styled.div`
   display: flex;
   height: 100vh;
-  align-items: center;
   background: #fc5185;
-  justify-content: center;
   color: #fc5185;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 1s ease-in-out, color 1s ease-in-out;
 `;
 
 const QuoteBox = styled.div`
