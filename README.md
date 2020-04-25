@@ -1,6 +1,6 @@
 # Projects for the freeCodeCamp Curriculum
 
-[Quote Machine Live Demo](https://codesandbox.io/s/festive-perlman-v687m, "Live Demo")
+[Quote Machine Live Demo](https://codesandbox.io/s/festive-perlman-v687m "Live Demo")
 
 tches Quotes from API and saves it to state on first mount
 
