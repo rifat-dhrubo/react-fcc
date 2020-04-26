@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import ReactMarkdown from 'react-markdown/with-html';
 import { TiArrowMaximise } from 'react-icons/ti';
+import breaks from 'remark-breaks';
+import defaultMarkDown from './defaultMarkdown';
 
 function App() {
-  const [markDown, setMarkDown] = useState('');
+  const [markDown, setMarkDown] = useState(defaultMarkDown);
   const [editorDisplay, setEditorDisplay] = useState('flex');
   const [editorSize, setEditorSize] = useState('30vh');
   const [previewDisplay, setPreviewDisplay] = useState('flex');
@@ -39,13 +41,21 @@ function App() {
         <span>
           <TiArrowMaximise onClick={handleEditor} />
         </span>
-        <textarea id="textArea" onChange={handleInput} />
+        <textarea id="editor" onChange={handleInput}>
+          {defaultMarkDown}
+        </textarea>
       </Editor>
       <Preview display={previewDisplay} minHeight={previewSize}>
         <span>
           <TiArrowMaximise onClick={handlePreview} />
         </span>
-        <ReactMarkdown source={markDown} escapeHtml />
+        <div id="preview">
+          <ReactMarkdown
+            source={markDown}
+            escapeHtml={false}
+            plugins={[breaks]}
+          />
+        </div>
       </Preview>
     </Wrapper>
   );
