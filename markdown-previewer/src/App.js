@@ -50,11 +50,7 @@ function App() {
           <TiArrowMaximise onClick={handlePreview} />
         </span>
         <div id="preview">
-          <ReactMarkdown
-            source={markDown}
-            escapeHtml={false}
-            plugins={[breaks]}
-          />
+          <ReactMarkdown source={markDown} escapeHtml plugins={[breaks]} />
         </div>
       </Preview>
     </Wrapper>
