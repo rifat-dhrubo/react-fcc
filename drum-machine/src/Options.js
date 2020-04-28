@@ -3,7 +3,13 @@ import React from 'react';
 import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
 
-export default function Options({ handlePower, handleBank, handleVolume }) {
+export default function Options({
+  handlePower,
+  handleBank,
+  handleVolume,
+  message,
+  power,
+}) {
   return (
     <Option>
       <div className='toggle'>
@@ -12,12 +18,13 @@ export default function Options({ handlePower, handleBank, handleVolume }) {
           className='toggle__input'
           type='checkbox'
           id='power'
-          onClick={handlePower}
+          onChange={handlePower}
+          checked={power}
         />
         <label htmlFor='power' className='label' />
       </div>
       <div className='text'>
-        <p>Rocking Out</p>
+        <p>{message}</p>
       </div>
       <div className='volume'>
         <input
@@ -46,6 +53,8 @@ Options.propTypes = {
   handlePower: PropTypes.func.isRequired,
   handleBank: PropTypes.func.isRequired,
   handleVolume: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+  power: PropTypes.bool.isRequired,
 };
 
 const Option = styled.div`

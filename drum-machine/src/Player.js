@@ -2,29 +2,63 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Drum from './Drum';
 import Options from './Options';
+import { bankOne, bankTwo } from './audioSources';
 
 export default function Player() {
-  const [power, setPower] = useState(false);
+  const [power, setPower] = useState(true);
   const [bank, setBank] = useState(false);
-  const [volume, setVolume] = useState(50);
+  const [volume, setVolume] = useState(0.5);
+  const [message, setMessage] = useState('Rocking Out');
 
   const handlePower = () => {
     setPower(!power);
   };
   const handleBank = () => {
-    setBank(!bank);
+    if (bank) {
+      setMessage('Heater Kit');
+      setBank(!bank);
+    } else {
+      setMessage('Smooth Piano Kit');
+      setBank(!bank);
+    }
   };
 
   const handleVolume = (event) => {
-    setVolume(Number(event.target.value));
+    setVolume(Number(event.target.value) / 100);
   };
 
   const handleDrumKeyPress = (event) => {
-    console.log(event.key);
+    if (!power) return;
+
+    const key =
+      event?.key?.toUpperCase() ?? event?.target?.value?.toUpperCase();
+
+    let audio;
+
+    if (bank) {
+      audio = bankOne[key].url;
+      if (bankOne[key].message !== message) setMessage(bankOne[key].message);
+    } else {
+      audio = bankTwo[key].url;
+      if (bankTwo[key].message !== message) setMessage(bankOne[key].message);
+    }
+
+    const audioRef = new Audio(audio);
+
+    async function play() {
+      audioRef.volume = volume;
+      try {
+        await audioRef.play();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    play();
   };
 
   const handleDrumClick = (event) => {
-    console.log(event.target.value);
+    handleDrumKeyPress(event);
   };
 
   useEffect(() => {
@@ -39,6 +73,8 @@ export default function Player() {
     <Wrapper>
       <Drum handleDrumClick={handleDrumClick} />
       <Options
+        message={message}
+        power={power}
         handlePower={handlePower}
         handleBank={handleBank}
         handleVolume={handleVolume}

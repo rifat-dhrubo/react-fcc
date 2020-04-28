@@ -82,5 +82,9 @@ const Row = styled.div`
     :hover {
       transform: scale(1.1);
     }
+    :active {
+      color: #ffffff;
+      background: #fc5185;
+    }
   }
 `;
