@@ -1,27 +1,50 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 
-export default function Drum() {
+export default function Drum({ handleDrumClick }) {
   return (
     <DrumPlayer>
       <Row>
-        <button type='button'>Q</button>
-        <button type='button'>W</button>
-        <button type='button'>E</button>
+        <button type='button' onClick={handleDrumClick} value='q'>
+          Q
+        </button>
+        <button type='button' onClick={handleDrumClick} value='w'>
+          W
+        </button>
+        <button type='button' onClick={handleDrumClick} value='e'>
+          E
+        </button>
       </Row>
       <Row>
-        <button type='button'>A</button>
-        <button type='button'>S</button>
-        <button type='button'>D</button>
+        <button type='button' onClick={handleDrumClick} value='a'>
+          A
+        </button>
+        <button type='button' onClick={handleDrumClick} value='s'>
+          S
+        </button>
+        <button type='button' onClick={handleDrumClick} value='d'>
+          D
+        </button>
       </Row>
       <Row>
-        <button type='button'>Z</button>
-        <button type='button'>X</button>
-        <button type='button'>C</button>
+        <button type='button' onClick={handleDrumClick} value='z'>
+          Z
+        </button>
+        <button type='button' onClick={handleDrumClick} value='x'>
+          X
+        </button>
+        <button type='button' onClick={handleDrumClick} value='c'>
+          C
+        </button>
       </Row>
     </DrumPlayer>
   );
 }
+
+Drum.propTypes = {
+  handleDrumClick: PropTypes.func.isRequired,
+};
 
 const DrumPlayer = styled.div`
   display: flex;
@@ -39,6 +62,7 @@ const Row = styled.div`
   padding: 0 1rem;
 
   & button {
+    cursor: pointer;
     width: 33.33%;
     background: #364f6b;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -49,9 +73,14 @@ const Row = styled.div`
     text-align: center;
     font-size: calc(16px + 4vw);
     border: 0px;
+    transition: all 0.3s ease-in-out;
 
     :focus {
       outline: 2px solid #fc5185;
+    }
+
+    :hover {
+      transform: scale(1.1);
     }
   }
 `;

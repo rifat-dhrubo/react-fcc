@@ -1,27 +1,52 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 
-export default function Options() {
+export default function Options({ handlePower, handleBank, handleVolume }) {
   return (
     <Option>
-      <div className='group'>
-        <input className='box' type='checkbox' id='power' />
+      <div className='toggle'>
+        <h4>Power</h4>
+        <input
+          className='toggle__input'
+          type='checkbox'
+          id='power'
+          onClick={handlePower}
+        />
         <label htmlFor='power' className='label' />
       </div>
       <div className='text'>
         <p>Rocking Out</p>
       </div>
       <div className='volume'>
-        <input type='range' />
+        <input
+          type='range'
+          min='1'
+          max='100'
+          step='1'
+          onChange={handleVolume}
+        />
       </div>
-      <div className='group'>
-        <input className='box' type='checkbox' id='bank' />
+      <div className='toggle'>
+        <h4>Bank</h4>
+        <input
+          className='toggle__input'
+          type='checkbox'
+          id='bank'
+          onClick={handleBank}
+        />
         <label htmlFor='bank' className='label' />
       </div>
     </Option>
   );
 }
+
+Options.propTypes = {
+  handlePower: PropTypes.func.isRequired,
+  handleBank: PropTypes.func.isRequired,
+  handleVolume: PropTypes.func.isRequired,
+};
 
 const Option = styled.div`
   flex-basis: 40%;
@@ -34,15 +59,19 @@ const Option = styled.div`
   align-items: center;
   padding: 1rem 0;
 
-  .group {
+  .toggle {
     position: relative;
-    width: 50px;
-    height: 50px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+
+    h4 {
+      cursor: default;
+    }
 
     .label {
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 62px;
       height: 26px;
       box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.25);
@@ -60,7 +89,7 @@ const Option = styled.div`
         transition: 0.3s ease-in-out;
       }
     }
-    .box {
+    .toggle__input {
       display: none;
 
       &:checked + .label {
