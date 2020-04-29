@@ -6,92 +6,92 @@ import { blue, white, pink } from './colors';
 export default function Keys() {
   return (
     <Calculator>
-      <Row className="display">
+      <Row className='display'>
         <p>This is the result</p>
       </Row>
       <Row>
-        <button type="button" value="w">
+        <button type='button' value='CE'>
           CE
         </button>
-        <button type="button" value="e">
+        <button type='button' value='e'>
           C
         </button>
-        <button type="button" value="e">
+        <button type='button' value='e'>
           %
         </button>
-        <button type="button" value="q">
+        <button type='button' value='q'>
           <FiDelete />
         </button>
       </Row>
       <Row>
-        <button type="button" value="q">
+        <button type='button' value='q'>
           <sup>1</sup>&frasl;<sub>x</sub>
         </button>
-        <button type="button" value="w">
+        <button type='button' value='w'>
           <p>
             <sub>X</sub>2
           </p>
         </button>
-        <button type="button" value="e">
-          &radic;<sup className="square">x</sup>
+        <button type='button' value='e'>
+          &radic;<sup className='square'>x</sup>
         </button>
-        <button type="button" value="e">
+        <button type='button' value='e'>
           /
         </button>
       </Row>
       <Row>
-        <button type="button" value="q">
+        <button type='button' value='q'>
           7
         </button>
-        <button type="button" value="w">
+        <button type='button' value='w'>
           8
         </button>
-        <button type="button" value="e">
+        <button type='button' value='e'>
           9
         </button>
-        <button type="button" value="e">
+        <button type='button' value='e'>
           &times;
         </button>
       </Row>
       <Row>
-        <button type="button" value="a">
+        <button type='button' value='a'>
           4
         </button>
-        <button type="button" value="s">
+        <button type='button' value='s'>
           5
         </button>
-        <button type="button" value="d">
+        <button type='button' value='d'>
           6
         </button>
-        <button type="button" value="d">
+        <button type='button' value='d'>
           -
         </button>
       </Row>
       <Row>
-        <button type="button" value="z">
+        <button type='button' value='z'>
           1
         </button>
-        <button type="button" value="x">
+        <button type='button' value='x'>
           2
         </button>
-        <button type="button" value="c">
+        <button type='button' value='c'>
           3
         </button>
-        <button type="button" value="c">
+        <button type='button' value='c'>
           +
         </button>
       </Row>
       <Row>
-        <button type="button" value="c">
+        <button type='button' value='c'>
           +/-
         </button>
-        <button type="button" value="z">
+        <button type='button' value='z'>
           0
         </button>
-        <button type="button" value="x">
+        <button type='button' value='x'>
           &middot;
         </button>
-        <button type="button" value="c">
+        <button type='button' value='c'>
           =
         </button>
       </Row>
