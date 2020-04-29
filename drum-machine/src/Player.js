@@ -15,10 +15,10 @@ export default function Player() {
   };
   const handleBank = () => {
     if (bank) {
-      setMessage('Heater Kit');
+      setMessage('Smooth Piano Kit');
       setBank(!bank);
     } else {
-      setMessage('Smooth Piano Kit');
+      setMessage('Heater Kit ');
       setBank(!bank);
     }
   };
@@ -61,10 +61,10 @@ export default function Player() {
     handleDrumKeyPress(event);
   };
 
-  useEffect(() => {
+  useEffect(function listenForKeyPress() {
     document.addEventListener('keypress', handleDrumKeyPress);
 
-    return () => {
+    return function removeListenForKeyPress() {
       document.removeEventListener('keypress', handleDrumKeyPress);
     };
   });

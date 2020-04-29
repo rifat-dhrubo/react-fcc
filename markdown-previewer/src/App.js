@@ -41,9 +41,7 @@ function App() {
         <span>
           <TiArrowMaximise onClick={handleEditor} />
         </span>
-        <textarea id="editor" onChange={handleInput}>
-          {defaultMarkDown}
-        </textarea>
+        <textarea id="editor" value={markDown} onChange={handleInput} />
       </Editor>
       <Preview display={previewDisplay} minHeight={previewSize}>
         <span>
