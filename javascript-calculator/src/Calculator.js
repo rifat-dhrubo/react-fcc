@@ -20,10 +20,20 @@ export default function Calculator({
         </div>
       </Row>
       <Row>
-        <button type='button' id='clear' value='CE'>
+        <button
+          type='button'
+          id='clear'
+          value='CE'
+          onClick={handleButtonPressClick}
+        >
           CE
         </button>
-        <button type='button' id='clearAll' value='C'>
+        <button
+          type='button'
+          id='clearAll'
+          value='Escape'
+          onClick={handleButtonPressClick}
+        >
           C
         </button>
         <button type='button' value='%' onClick={handleButtonPressClick}>
@@ -157,10 +167,15 @@ export default function Calculator({
         </button>
       </Row>
       <Row>
-        <button type='button' value='negate'>
+        <button type='button' value='Negate' onClick={handleButtonPressClick}>
           +/-
         </button>
-        <button type='button' id='zero' value='0'>
+        <button
+          type='button'
+          id='zero'
+          value='0'
+          onClick={handleButtonPressClick}
+        >
           0
         </button>
         <button
@@ -174,7 +189,7 @@ export default function Calculator({
         <button
           type='button'
           id='equals'
-          value='='
+          value='Enter'
           onClick={handleButtonPressClick}
         >
           =

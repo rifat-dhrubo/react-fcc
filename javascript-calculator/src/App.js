@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import Calculator from './Calculator';
 import { blue, white } from './colors';
+
 import {
+  clearRecent,
   numberCheck,
   operatorCheck,
   decimalCheck,
   deleteCheck,
   enterCheck,
+  escapeCheck,
+  negateCheck,
+  evaluate,
 } from './utils/math';
 
 function App() {
@@ -54,7 +59,7 @@ function App() {
   const handleOperator = (key) => {
     // when we have both first and second input calculate
     if (secondInput !== '') {
-      const result = eval(`${firstInput}${operator}${secondInput}`);
+      const result = evaluate(firstInput, operator, secondInput);
       setHistory(
         history.concat(`${firstInput}${operator}${secondInput}${key}`)
       );
@@ -72,8 +77,13 @@ function App() {
     setHistory(history.concat(key));
   };
 
-  // ! not registering first input
+  // handle delete
   const handleDelete = () => {
+    if (operatorCheck.test(history.slice(-1))) {
+      setOperator('');
+      setHistory(history.slice(0, -1));
+      return;
+    }
     console.log('delete');
     if (operator === '') {
       setFirstInput(firstInput.slice(0, -1));
@@ -85,9 +95,69 @@ function App() {
       setHistory(history.slice(0, -1));
     }
   };
-  // TODO handle Enter Logic
+  // handling Enter and = logic
   const handleEnter = () => {
-    //
+    if (operator === '') {
+      if (history.slice(-1) === '=') return;
+      setDisplay(display.concat(''));
+      setHistory(history.concat('='));
+    } else if (operatorCheck.test(operator)) {
+      const result = String(evaluate(`${firstInput}${operator}${secondInput}`));
+      const operatorIndex = history.match(operatorCheck);
+      console.log(operatorIndex.index);
+      if (history.slice(-1) === '=') {
+        setHistory(firstInput.concat(history.slice(operatorIndex.index)));
+
+        setFirstInput(result);
+        setDisplay(result);
+        return;
+      }
+      setHistory(history.concat('='));
+      setFirstInput(result);
+      setDisplay(result);
+    }
+  };
+
+  const resetState = () => {
+    setHistory('');
+    setDisplay('');
+    setFirstInput('0');
+    setSecondInput('');
+    setOperator('');
+  };
+
+  const handleEscape = () => {
+    resetState();
+  };
+
+  const handleClearRecent = () => {
+    if (operator === '') {
+      resetState();
+    } else {
+      setSecondInput('');
+      setDisplay('');
+      setHistory(''.concat(firstInput, operator));
+    }
+  };
+  //
+  const handleNegate = () => {
+    if (operator === '') {
+      if (firstInput[0] === '-') return;
+      setFirstInput('-'.concat(firstInput.slice()));
+      setDisplay('-'.concat(display.slice()));
+      setHistory('-'.concat(history));
+    } // slice at operator and then negate it and set history
+    else {
+      if (secondInput[0] === '-') return;
+      setSecondInput('-'.concat(secondInput.slice()));
+      setDisplay('-'.concat(secondInput.slice()));
+      const secondInputSize = secondInput.length;
+      setHistory(
+        history
+          .slice(0, history.length - secondInputSize)
+          .concat('-', secondInput)
+      );
+    }
   };
 
   const handleKey = (event) => {
@@ -114,6 +184,21 @@ function App() {
     }
     if (enterCheck.test(key)) {
       handleEnter();
+      return;
+    }
+    if (escapeCheck.test(key)) {
+      handleEscape();
+      return;
+    }
+    if (negateCheck.test(key)) {
+      console.log(`key: ${key}`);
+      handleNegate();
+      return;
+    }
+
+    if (clearRecent.test(key)) {
+      console.log(`key: ${key}`);
+      handleClearRecent();
     }
   };
 

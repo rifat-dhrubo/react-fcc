@@ -1,8 +1,11 @@
 const numberCheck = new RegExp(/^[0-9]/);
 const operatorCheck = new RegExp(/\+|-|\*|\//);
-const deleteCheck = new RegExp(/Backspace|Delete/g);
-const enterCheck = new RegExp(/Enter/g);
+const deleteCheck = new RegExp(/Backspace|Delete/);
+const enterCheck = new RegExp(/Enter/);
+const escapeCheck = new RegExp(/Escape/);
 const decimalCheck = new RegExp(/^\./);
+const negateCheck = new RegExp(/Negate/);
+const clearRecent = new RegExp(/CE/);
 
 function add(first, second) {
   return Number(first) + Number(second);
@@ -34,7 +37,37 @@ function minus(value) {
   return -Number(value);
 }
 
+function evaluate(first, operator, second) {
+  let result;
+  switch (operator) {
+    case '+':
+      result = add(first, second);
+      break;
+
+    case '-':
+      result = subtract(first, second);
+      break;
+
+    case '*':
+      result = multiply(first, second);
+      break;
+
+    case '/':
+      result = divide(first, second);
+      break;
+
+    default:
+      break;
+  }
+
+  return result;
+}
+
 export {
+  clearRecent,
+  evaluate,
+  negateCheck,
+  escapeCheck,
   enterCheck,
   numberCheck,
   deleteCheck,
