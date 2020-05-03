@@ -13,6 +13,10 @@ import {
   escapeCheck,
   negateCheck,
   evaluate,
+  percentCheck,
+  percent,
+  reciprocalCheck,
+  reciprocal,
 } from './utils/math';
 
 function App() {
@@ -102,7 +106,7 @@ function App() {
       setDisplay(display.concat(''));
       setHistory(history.concat('='));
     } else if (operatorCheck.test(operator)) {
-      const result = String(evaluate(`${firstInput}${operator}${secondInput}`));
+      const result = String(evaluate(firstInput, operator, secondInput));
       const operatorIndex = history.match(operatorCheck);
       console.log(operatorIndex.index);
       if (history.slice(-1) === '=') {
@@ -139,6 +143,37 @@ function App() {
       setHistory(''.concat(firstInput, operator));
     }
   };
+
+  const handlePercent = () => {
+    if (operator === '') resetState();
+    else {
+      const result = String(percent(secondInput));
+      setHistory(
+        history.slice(0, history.length - secondInput.length).concat(result)
+      );
+      // setFirstInput(String(result));
+      setSecondInput(result);
+      setDisplay(result);
+    }
+  };
+  const handleReciprocal = () => {
+    if (operator === '') {
+      setSecondInput(firstInput);
+      setOperator('/');
+      setHistory(`1/${firstInput}`);
+      const result = String(reciprocal(firstInput));
+      setDisplay(result);
+      setFirstInput(result);
+    } else {
+      const result = reciprocal(secondInput);
+      setHistory(
+        history.slice(0, history.length - secondInput.length).concat(result)
+      );
+      setSecondInput(result);
+      setDisplay(result);
+    }
+  };
+
   //
   const handleNegate = () => {
     if (operator === '') {
@@ -191,14 +226,21 @@ function App() {
       return;
     }
     if (negateCheck.test(key)) {
-      console.log(`key: ${key}`);
       handleNegate();
       return;
     }
 
     if (clearRecent.test(key)) {
-      console.log(`key: ${key}`);
       handleClearRecent();
+      return;
+    }
+    if (percentCheck.test(key)) {
+      handlePercent();
+      return;
+    }
+    if (reciprocalCheck.test(key)) {
+      console.log(`key: ${key}`);
+      handleReciprocal();
     }
   };
 

@@ -44,7 +44,12 @@ export default function Calculator({
         </button>
       </Row>
       <Row>
-        <button type='button' value='fraction' style={{ letterSpacing: '5px' }}>
+        <button
+          type='button'
+          value='fraction'
+          style={{ letterSpacing: '5px' }}
+          onClick={handleButtonPressClick}
+        >
           <sup>1</sup>&frasl;<sub>x</sub>
         </button>
         <button type='button' value='w'>

@@ -6,6 +6,8 @@ const escapeCheck = new RegExp(/Escape/);
 const decimalCheck = new RegExp(/^\./);
 const negateCheck = new RegExp(/Negate/);
 const clearRecent = new RegExp(/CE/);
+const percentCheck = new RegExp(/%/);
+const reciprocalCheck = new RegExp(/fraction/);
 
 function add(first, second) {
   return Number(first) + Number(second);
@@ -64,6 +66,8 @@ function evaluate(first, operator, second) {
 }
 
 export {
+  percentCheck,
+  reciprocalCheck,
   clearRecent,
   evaluate,
   negateCheck,
