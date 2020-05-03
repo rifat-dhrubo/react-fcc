@@ -8,35 +8,55 @@ const negateCheck = new RegExp(/Negate/);
 const clearRecent = new RegExp(/CE/);
 const percentCheck = new RegExp(/%/);
 const reciprocalCheck = new RegExp(/fraction/);
+const squareCheck = new RegExp(/square/);
+const squareRootCheck = new RegExp(/root/);
 
 function add(first, second) {
-  return Number(first) + Number(second);
+  const result = Number(first) + Number(second);
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 function subtract(first, second) {
-  return Number(first) - Number(second);
+  const result = Number(first) - Number(second);
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 function multiply(first, second) {
-  return Number(first) * Number(second);
+  const result = Number(first) * Number(second);
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 function divide(first, second) {
-  return Number(first) / Number(second);
+  const result = Number(first) / Number(second);
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 function percent(first) {
-  return Number(first) / 100;
+  const result = Number(first) / 100;
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 
 function squareRoot(value) {
-  return Math.sqrt(Number(value));
+  const result = Math.sqrt(Number(value));
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 function square(value) {
-  return Number(value) ** 2;
+  const result = Number(value) ** 2;
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 function reciprocal(value) {
-  return 1 / Number(value);
+  const result = 1 / Number(value);
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 
 function minus(value) {
-  return -Number(value);
+  const result = -Number(value);
+  if (result % 1 === 0) return result;
+  return Math.round((result + Number.EPSILON) * 1000) / 1000;
 }
 
 function evaluate(first, operator, second) {
@@ -66,6 +86,8 @@ function evaluate(first, operator, second) {
 }
 
 export {
+  squareCheck,
+  squareRootCheck,
   percentCheck,
   reciprocalCheck,
   clearRecent,

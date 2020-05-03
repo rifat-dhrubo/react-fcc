@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { FiDelete } from 'react-icons/fi';
 import PropTypes from 'prop-types';
+import { FaSquareRootAlt } from 'react-icons/fa';
 import { blue, white, pink } from './colors';
 
 export default function Calculator({
@@ -12,10 +13,10 @@ export default function Calculator({
   return (
     <Wrapper>
       <Row className='display'>
-        <div id='display'>
+        <div>
           <p>{upperDisplay}</p>
         </div>
-        <div>
+        <div id='display'>
           <h1>{lowerDisplay === '' ? 0 : lowerDisplay}</h1>
         </div>
       </Row>
@@ -52,18 +53,21 @@ export default function Calculator({
         >
           <sup>1</sup>&frasl;<sub>x</sub>
         </button>
-        <button type='button' value='w'>
-          <p>
-            <sub>X</sub>2
-          </p>
+        <button
+          type='button'
+          value='square'
+          className='square'
+          onClick={handleButtonPressClick}
+        >
+          x^2
         </button>
-        <button type='button' value='squareRoot'>
-          &radic;<sup className='square'>x</sup>
+        <button type='button' value='root' onClick={handleButtonPressClick}>
+          &radic;x
         </button>
         <button
           type='button'
           id='divide'
-          value='&divide;'
+          value='/'
           onClick={handleButtonPressClick}
         >
           /
@@ -259,6 +263,9 @@ const Row = styled.div`
   justify-content: space-around;
   padding: 0 1rem;
 
+  & .square {
+    font-size: calc(16px + 1vw);
+  }
   & button {
     cursor: pointer;
     width: 20%;

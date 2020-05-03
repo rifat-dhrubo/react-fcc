@@ -17,6 +17,10 @@ import {
   percent,
   reciprocalCheck,
   reciprocal,
+  squareRootCheck,
+  square,
+  squareRoot,
+  squareCheck,
 } from './utils/math';
 
 function App() {
@@ -62,6 +66,18 @@ function App() {
   };
   const handleOperator = (key) => {
     // when we have both first and second input calculate
+    console.log(history.slice(-1));
+    if (history.slice(-1) === '=') {
+      setHistory(firstInput.concat(key));
+      setOperator(key);
+      setSecondInput('');
+      return;
+    }
+    // check if the last input was operator set history as that
+    if (operatorCheck.test(history.slice(-1))) {
+      setHistory(history.slice(0, -1).concat(key));
+      return;
+    }
     if (secondInput !== '') {
       const result = evaluate(firstInput, operator, secondInput);
       setHistory(
@@ -71,13 +87,11 @@ function App() {
       setFirstInput(String(result));
       setDisplay(String(result));
       setSecondInput('');
-    }
-    setOperator(key);
-    // check if the last input was operator set history as that
-    if (operatorCheck.test(history.slice(-1))) {
-      setHistory(history.slice(0, -1).concat(key));
+      setOperator(key);
+      setHistory(history.concat(key));
       return;
     }
+    setOperator(key);
     setHistory(history.concat(key));
   };
 
@@ -174,6 +188,42 @@ function App() {
     }
   };
 
+  const handleSquare = () => {
+    if (operator === '') {
+      const result = String(square(firstInput));
+      setHistory(`sqr(${firstInput})`);
+      setFirstInput(result);
+      setDisplay(result);
+    } else {
+      const result = String(square(secondInput));
+      setHistory(
+        history
+          .slice(0, history.length - secondInput.length)
+          .concat(`sqr(${secondInput})`)
+      );
+      setSecondInput(result);
+      setDisplay(result);
+    }
+  };
+
+  const handleSquareRoot = () => {
+    if (operator === '') {
+      const result = String(squareRoot(firstInput));
+      setHistory(`root(${firstInput})`);
+      setFirstInput(result);
+      setDisplay(result);
+    } else {
+      const result = String(squareRoot(secondInput));
+      setHistory(
+        history
+          .slice(0, history.length - secondInput.length)
+          .concat(`root(${secondInput})`)
+      );
+      setSecondInput(result);
+      setDisplay(result);
+    }
+  };
+
   //
   const handleNegate = () => {
     if (operator === '') {
@@ -197,6 +247,7 @@ function App() {
 
   const handleKey = (event) => {
     const key = event?.target?.value ?? event?.key;
+    console.log(key);
 
     if (numberCheck.test(key)) {
       handleNumber(key);
@@ -239,8 +290,16 @@ function App() {
       return;
     }
     if (reciprocalCheck.test(key)) {
-      console.log(`key: ${key}`);
       handleReciprocal();
+      return;
+    }
+    if (squareCheck.test(key)) {
+      handleSquare();
+      return;
+    }
+    if (squareRootCheck.test(key)) {
+      console.log(key);
+      handleSquareRoot();
     }
   };
 
