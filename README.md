@@ -30,7 +30,7 @@
 [JavaScript Calculator Live Demo](https://codesandbox.io/s/reverent-torvalds-rgk29 "Live Demo")
 
 - User can enter input using keyboard or the on screen keys.
-- Users can do all the basic arithmetic operation along with square, square root and reciprocal.
+- Users can do all the basic arithmetic operation along with square, square root, reciprocal and percent.
 - Users can reset the calculator.
 - Users can clear the last entered digit or operator.
 - Users can clear the last input.
