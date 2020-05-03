@@ -2,7 +2,6 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { FiDelete } from 'react-icons/fi';
 import PropTypes from 'prop-types';
-import { FaSquareRootAlt } from 'react-icons/fa';
 import { blue, white, pink } from './colors';
 
 export default function Calculator({
@@ -23,7 +22,7 @@ export default function Calculator({
       <Row>
         <button
           type='button'
-          id='clear'
+          id='clearState'
           value='CE'
           onClick={handleButtonPressClick}
         >
@@ -31,7 +30,7 @@ export default function Calculator({
         </button>
         <button
           type='button'
-          id='clearAll'
+          id='clear'
           value='Escape'
           onClick={handleButtonPressClick}
         >

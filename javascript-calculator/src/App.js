@@ -29,6 +29,8 @@ function App() {
   const [firstInput, setFirstInput] = useState('0');
   const [secondInput, setSecondInput] = useState('');
   const [operator, setOperator] = useState('');
+  const [isFirstDecimal, setIsFirstDecimal] = useState(false);
+  const [isSecondDecimal, setIsSecondDecimal] = useState(false);
 
   const handleNumber = (key) => {
     if (operator === '') {
@@ -51,22 +53,23 @@ function App() {
   };
 
   const handleDecimal = (key) => {
-    if (firstInput.slice(-1) === '.' || secondInput.slice(-1) === '.') {
-      return;
-    }
     if (operator === '') {
+      if (isFirstDecimal) return;
       setFirstInput(firstInput.concat(key));
       setDisplay(firstInput.concat(key));
       setHistory(history.concat(key));
+      setIsFirstDecimal(true);
     } else {
+      if (isSecondDecimal) return;
       setSecondInput(secondInput.concat(key));
       setDisplay(secondInput.concat(key));
       setHistory(history.concat(key));
+      setIsSecondDecimal(true);
     }
   };
   const handleOperator = (key) => {
     // when we have both first and second input calculate
-    console.log(history.slice(-1));
+
     if (history.slice(-1) === '=') {
       setHistory(firstInput.concat(key));
       setOperator(key);
@@ -102,7 +105,7 @@ function App() {
       setHistory(history.slice(0, -1));
       return;
     }
-    console.log('delete');
+
     if (operator === '') {
       setFirstInput(firstInput.slice(0, -1));
       setDisplay(firstInput.slice(0, -1));
@@ -122,16 +125,28 @@ function App() {
     } else if (operatorCheck.test(operator)) {
       const result = String(evaluate(firstInput, operator, secondInput));
       const operatorIndex = history.match(operatorCheck);
-      console.log(operatorIndex.index);
+
       if (history.slice(-1) === '=') {
         setHistory(firstInput.concat(history.slice(operatorIndex.index)));
 
-        setFirstInput(result);
+        if (decimalCheck.test(result)) {
+          setIsFirstDecimal(true);
+          setFirstInput(result);
+        } else {
+          setIsFirstDecimal(false);
+          setFirstInput(result);
+        }
         setDisplay(result);
         return;
       }
       setHistory(history.concat('='));
-      setFirstInput(result);
+      if (decimalCheck.test(result)) {
+        setIsFirstDecimal(true);
+        setFirstInput(result);
+      } else {
+        setIsFirstDecimal(false);
+        setFirstInput(result);
+      }
       setDisplay(result);
     }
   };
@@ -142,6 +157,8 @@ function App() {
     setFirstInput('0');
     setSecondInput('');
     setOperator('');
+    setIsFirstDecimal(false);
+    setIsSecondDecimal(false);
   };
 
   const handleEscape = () => {
@@ -165,8 +182,14 @@ function App() {
       setHistory(
         history.slice(0, history.length - secondInput.length).concat(result)
       );
-      // setFirstInput(String(result));
-      setSecondInput(result);
+      if (decimalCheck.test(result)) {
+        setIsSecondDecimal(true);
+        setSecondInput(result);
+      } else {
+        setIsSecondDecimal(false);
+        setSecondInput(result);
+      }
+
       setDisplay(result);
     }
   };
@@ -177,13 +200,25 @@ function App() {
       setHistory(`1/${firstInput}`);
       const result = String(reciprocal(firstInput));
       setDisplay(result);
-      setFirstInput(result);
+      if (decimalCheck.test(result)) {
+        setIsFirstDecimal(true);
+        setFirstInput(result);
+      } else {
+        setIsFirstDecimal(false);
+        setFirstInput(result);
+      }
     } else {
       const result = reciprocal(secondInput);
       setHistory(
         history.slice(0, history.length - secondInput.length).concat(result)
       );
-      setSecondInput(result);
+      if (decimalCheck.test(result)) {
+        setIsSecondDecimal(true);
+        setSecondInput(result);
+      } else {
+        setIsSecondDecimal(false);
+        setSecondInput(result);
+      }
       setDisplay(result);
     }
   };
@@ -192,7 +227,13 @@ function App() {
     if (operator === '') {
       const result = String(square(firstInput));
       setHistory(`sqr(${firstInput})`);
-      setFirstInput(result);
+      if (decimalCheck.test(result)) {
+        setIsFirstDecimal(true);
+        setFirstInput(result);
+      } else {
+        setIsFirstDecimal(false);
+        setFirstInput(result);
+      }
       setDisplay(result);
     } else {
       const result = String(square(secondInput));
@@ -201,7 +242,13 @@ function App() {
           .slice(0, history.length - secondInput.length)
           .concat(`sqr(${secondInput})`)
       );
-      setSecondInput(result);
+      if (decimalCheck.test(result)) {
+        setIsSecondDecimal(true);
+        setSecondInput(result);
+      } else {
+        setIsSecondDecimal(false);
+        setSecondInput(result);
+      }
       setDisplay(result);
     }
   };
@@ -210,7 +257,13 @@ function App() {
     if (operator === '') {
       const result = String(squareRoot(firstInput));
       setHistory(`root(${firstInput})`);
-      setFirstInput(result);
+      if (decimalCheck.test(result)) {
+        setIsFirstDecimal(true);
+        setFirstInput(result);
+      } else {
+        setIsFirstDecimal(false);
+        setFirstInput(result);
+      }
       setDisplay(result);
     } else {
       const result = String(squareRoot(secondInput));
@@ -219,7 +272,13 @@ function App() {
           .slice(0, history.length - secondInput.length)
           .concat(`root(${secondInput})`)
       );
-      setSecondInput(result);
+      if (decimalCheck.test(result)) {
+        setIsSecondDecimal(true);
+        setSecondInput(result);
+      } else {
+        setIsSecondDecimal(false);
+        setSecondInput(result);
+      }
       setDisplay(result);
     }
   };
@@ -247,7 +306,6 @@ function App() {
 
   const handleKey = (event) => {
     const key = event?.target?.value ?? event?.key;
-    console.log(key);
 
     if (numberCheck.test(key)) {
       handleNumber(key);
@@ -298,15 +356,12 @@ function App() {
       return;
     }
     if (squareRootCheck.test(key)) {
-      console.log(key);
       handleSquareRoot();
     }
   };
 
   useEffect(function buttonPressOrClick() {
     document.addEventListener('keydown', handleKey);
-
-    console.log(`I ran`);
 
     return () => document.removeEventListener('keydown', handleKey);
   });
