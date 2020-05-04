@@ -1,11 +1,9 @@
-const Black = #222831;
+const black = '#252A34';
 
-const DarkGrey = #393e46;
+const grey = '#393e46';
 
-const LightGrey = #eeeeee;
+const white = '#eeeeee';
 
-const DarkMint = #00adb5;
+const darkPink = '#ff2e63';
 
-
-
-export {Black, DarkGrey, DarkMint, LightGrey}
+export { black, white, darkPink, grey };
