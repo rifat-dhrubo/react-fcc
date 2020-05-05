@@ -37,3 +37,14 @@
 - Users input history is shown in the calculator.
 - Calculator follows immediate execution logic.
 - This calculator was modeled after the standard calculator in Microsoft windows 10.
+  
+## Pomodoro Clock
+
+[Pomodoro Clock Live Demo](https://codesandbox.io/s/laughing-sammet-rne8v "Live Demo")
+
+- Users can set session and break length.
+- Default timer is session.
+- The timer displays the timer type and the reaming time.
+- When Session timer reached 0, a audio clip is played indicating its over and begins break timer.
+- Same happens for Break timer. Audio clip is played and session timer begins.
+- Users can pause, play or modify the timer at any time.
