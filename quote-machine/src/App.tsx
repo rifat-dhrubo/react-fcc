@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import styled from '@emotion/styled';
 import logo from './loading.svg';
 import twitter from './twitter.svg';
@@ -35,51 +35,61 @@ const colors = [
   '#73A857',
 ];
 
+interface API {
+  text: String;
+  author: String;
+}
+
 function App() {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [quote, setQuote] = useState({});
+  const [data, setData] = useState<Array<API> | null>(null);
+  const [quote, setQuote] = useState<API | null>(null);
   const [color, setColor] = useState(0);
-  const wrapper = useRef(null);
+  const wrapper = useRef<HTMLDivElement>(null);
 
   // Fetching data from API
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       setLoading(true);
       const result = await fetch(
         'https://type.fit/api/quotes'
       ).then((response) => response.json());
+      console.log(result);
       setData(result);
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [setData]);
 
   // Getting the first random quote
   useEffect(() => {
-    setQuote(data[Math.floor(Math.random() * 1600)]);
+    if (data !== null) setQuote(data[Math.floor(Math.random() * 1600)]);
   }, [data]);
 
   // Changing color based on click
-  useEffect(() => {
-    wrapper.current.style.color = colors[color];
-    wrapper.current.style.background = colors[color];
+  useLayoutEffect(() => {
+    if (wrapper.current !== null) {
+      wrapper.current.style.color = colors[color];
+      wrapper.current.style.background = colors[color];
+    }
   }, [color]);
 
   // Getting random quote on button click
-  const randomQuotes = () => {
-    if (data.length === 0) {
-      setLoading(true);
-    } else {
-      setColor(Math.floor(Math.random() * colors.length));
-      setQuote(data[Math.floor(Math.random() * 1600)]);
+  const randomQuotes = (): void => {
+    if (data !== null) {
+      if (data.length === 0) {
+        setLoading(true);
+      } else {
+        setColor(Math.floor(Math.random() * colors.length));
+        setQuote(data[Math.floor(Math.random() * 1600)]);
+      }
     }
   };
 
   return (
     <Wrapper ref={wrapper}>
       <QuoteBox id="quote-box">
-        {loading || quote === undefined ? (
+        {loading || quote == null ? (
           <img src={logo} alt="Loading" />
         ) : (
           <>
@@ -87,7 +97,6 @@ function App() {
               <h3>{quote.text}</h3>
             </QuoteText>
             <QuoteAuthor id="author">
-              {' '}
               {quote.author === null ? <p>UnKnown</p> : <p>- {quote.author}</p>}
             </QuoteAuthor>
             <QuoteUtil>
