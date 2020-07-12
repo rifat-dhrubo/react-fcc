@@ -1,4 +1,13 @@
-const bankOne = {
+interface DrumKeyType {
+  message: string;
+  url: string;
+}
+
+type DrumKey = {
+  [key: string]: DrumKeyType;
+};
+
+const bankOne: DrumKey = {
   Q: {
     message: 'Heater 1',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Heater-1.mp3',
@@ -37,7 +46,7 @@ const bankOne = {
   },
 };
 
-const bankTwo = {
+const bankTwo: DrumKey = {
   Q: {
     message: 'Chord 1',
     url: 'https://s3.amazonaws.com/freecodecamp/drums/Chord_1.mp3',

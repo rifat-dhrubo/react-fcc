@@ -1,50 +1,49 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 
-export default function Drum({ handleDrumClick }) {
+type PROPS = {
+  handleDrumClick: (event: React.MouseEvent<HTMLElement>) => void;
+};
+export default function Drum(props: PROPS) {
+  const { handleDrumClick } = props;
   return (
     <DrumPlayer>
       <Row>
-        <button type='button' onClick={handleDrumClick} value='q'>
+        <button type="button" onClick={handleDrumClick} data-value="q">
           Q
         </button>
-        <button type='button' onClick={handleDrumClick} value='w'>
+        <button type="button" onClick={handleDrumClick} data-value="w">
           W
         </button>
-        <button type='button' onClick={handleDrumClick} value='e'>
+        <button type="button" onClick={handleDrumClick} data-value="e">
           E
         </button>
       </Row>
       <Row>
-        <button type='button' onClick={handleDrumClick} value='a'>
+        <button type="button" onClick={handleDrumClick} data-value="a">
           A
         </button>
-        <button type='button' onClick={handleDrumClick} value='s'>
+        <button type="button" onClick={handleDrumClick} data-value="s">
           S
         </button>
-        <button type='button' onClick={handleDrumClick} value='d'>
+        <button type="button" onClick={handleDrumClick} data-value="d">
           D
         </button>
       </Row>
       <Row>
-        <button type='button' onClick={handleDrumClick} value='z'>
+        <button type="button" onClick={handleDrumClick} data-value="z">
           Z
         </button>
-        <button type='button' onClick={handleDrumClick} value='x'>
+        <button type="button" onClick={handleDrumClick} data-value="x">
           X
         </button>
-        <button type='button' onClick={handleDrumClick} value='c'>
+        <button type="button" onClick={handleDrumClick} data-value="c">
           C
         </button>
       </Row>
     </DrumPlayer>
   );
 }
-
-Drum.propTypes = {
-  handleDrumClick: PropTypes.func.isRequired,
-};
 
 const DrumPlayer = styled.div`
   display: flex;

@@ -1,61 +1,55 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
 
-export default function Options({
-  handlePower,
-  handleBank,
-  handleVolume,
-  message,
-  power,
-}) {
+type PROPS = {
+  message: string;
+  power: boolean;
+  handlePower: () => void;
+  handleBank: () => void;
+  handleVolume: (event: ChangeEvent<HTMLInputElement>) => void;
+};
+
+function Options(props: PROPS) {
+  const { handlePower, handleBank, handleVolume, message, power } = props;
   return (
     <Option>
-      <div className='toggle'>
+      <div className="toggle">
         <h4>Power</h4>
         <input
-          className='toggle__input'
-          type='checkbox'
-          id='power'
+          className="toggle__input"
+          type="checkbox"
+          id="power"
           onChange={handlePower}
           checked={power}
         />
-        <label htmlFor='power' className='label' />
+        <label htmlFor="power" className="label" />
       </div>
-      <div className='text'>
+      <div className="text">
         <p>{message}</p>
       </div>
-      <div className='volume'>
+      <div className="volume">
         <input
-          type='range'
-          min='1'
-          max='100'
-          step='1'
+          type="range"
+          min="1"
+          max="100"
+          step="1"
           onChange={handleVolume}
         />
       </div>
-      <div className='toggle'>
+      <div className="toggle">
         <h4>Bank</h4>
         <input
-          className='toggle__input'
-          type='checkbox'
-          id='bank'
+          className="toggle__input"
+          type="checkbox"
+          id="bank"
           onClick={handleBank}
         />
-        <label htmlFor='bank' className='label' />
+        <label htmlFor="bank" className="label" />
       </div>
     </Option>
   );
 }
-
-Options.propTypes = {
-  handlePower: PropTypes.func.isRequired,
-  handleBank: PropTypes.func.isRequired,
-  handleVolume: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired,
-  power: PropTypes.bool.isRequired,
-};
 
 const Option = styled.div`
   flex-basis: 40%;
@@ -143,3 +137,5 @@ const Option = styled.div`
   & #bank {
   }
 `;
+
+export default Options;

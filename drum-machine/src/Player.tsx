@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent, MouseEvent } from 'react';
 import styled from '@emotion/styled';
 import Drum from './Drum';
 import Options from './Options';
@@ -10,10 +10,10 @@ export default function Player() {
   const [volume, setVolume] = useState(0.5);
   const [message, setMessage] = useState('Rocking Out');
 
-  const handlePower = () => {
+  const handlePower = (): void => {
     setPower(!power);
   };
-  const handleBank = () => {
+  const handleBank = (): void => {
     if (bank) {
       setMessage('Smooth Piano Kit');
       setBank(!bank);
@@ -23,16 +23,11 @@ export default function Player() {
     }
   };
 
-  const handleVolume = (event) => {
+  const handleVolume = (event: ChangeEvent<HTMLInputElement>): void => {
     setVolume(Number(event.target.value) / 100);
   };
 
-  const handleDrumKeyPress = (event) => {
-    if (!power) return;
-
-    const key =
-      event?.key?.toUpperCase() ?? event?.target?.value?.toUpperCase();
-
+  function playAudio(key: string) {
     let audio;
 
     if (bank) {
@@ -45,7 +40,7 @@ export default function Player() {
 
     const audioRef = new Audio(audio);
 
-    async function play() {
+    async function play(): Promise<void> {
       audioRef.volume = volume;
       try {
         await audioRef.play();
@@ -55,10 +50,22 @@ export default function Player() {
     }
 
     play();
+  }
+
+  const handleDrumKeyPress = (event: KeyboardEvent): void => {
+    if (!power) return;
+
+    const key = event?.key?.toUpperCase();
+    playAudio(key);
   };
 
-  const handleDrumClick = (event) => {
-    handleDrumKeyPress(event);
+  const handleDrumClick = (event: MouseEvent<HTMLElement>): void => {
+    if (!power) return;
+
+    const key = event?.currentTarget?.dataset.value?.toUpperCase();
+    if (key !== undefined) {
+      playAudio(key);
+    }
   };
 
   useEffect(function listenForKeyPress() {

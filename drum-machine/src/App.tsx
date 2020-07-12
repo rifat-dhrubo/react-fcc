@@ -6,6 +6,7 @@ function App() {
   return (
     <Page>
       <Player />
+      <button>Hello</button>
     </Page>
   );
 }
