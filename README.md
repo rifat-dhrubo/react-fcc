@@ -19,7 +19,7 @@
 
 ## Drum Machine
 
-[Drum Machine Live Demo](https://codesandbox.io/s/friendly-cohen-5rww4 "Live Demo")
+[Drum Machine Live Demo](https://codesandbox.io/s/nifty-glade-bgcl6 "Live Demo")
 
 - Drum Machine can be turned on and off.
 - Output can be changed by by toggling the bank toggle. It changes between two sources.
